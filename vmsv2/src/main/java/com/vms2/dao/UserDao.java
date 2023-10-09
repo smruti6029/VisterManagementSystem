@@ -10,10 +10,14 @@ public interface UserDao {
 
 	User getUserbyPhone(String phone);
 
-	List<User> getallUser();
+	List<User> getallUser(Integer company_id);
 
 	User getuserByid(Integer id);
 
 	Integer updateUser(User user);
+
+	List<User> getallUsers();
+	
+	
 
 }

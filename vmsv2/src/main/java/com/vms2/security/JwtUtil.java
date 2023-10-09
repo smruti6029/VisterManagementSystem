@@ -18,7 +18,13 @@ public class JwtUtil {
 	
 	
 	   // public static final long EXPIRATION_TIME = 100_000;
-    public static final long EXPIRATION_TIME = 7 * 24 * 60 * 60 * 1000;
+//    public static final long EXPIRATION_TIME = 7 * 24 * 60 * 60 * 1000;
+    
+    public static final long EXPIRATION_TIME = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+//	public static final long EXPIRATION_TIME = 1 * 60 * 1000; // 1 minute in milliseconds
+
+    
+
     private static final long serialVersionUID = -2550185165626007488L;
     
     @Value("${jwt.secret}")
@@ -41,7 +47,7 @@ public class JwtUtil {
         return claimsResolver.apply(claims);
     }
 
-    private Claims getAllClaimsFromToken(String token) {
+    public Claims getAllClaimsFromToken(String token) {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 

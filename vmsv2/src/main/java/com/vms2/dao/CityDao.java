@@ -8,4 +8,6 @@ public interface CityDao {
 
 	List<City> getcitys(Integer id);
 
+	City getCityById(Integer city);
+
 }

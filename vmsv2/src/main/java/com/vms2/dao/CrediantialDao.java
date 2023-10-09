@@ -1,7 +1,6 @@
 package com.vms2.dao;
 
 import com.vms2.entity.CredentialMaster;
-import com.vms2.entity.User;
 
 public interface CrediantialDao {
 
@@ -9,6 +8,8 @@ public interface CrediantialDao {
 
 	CredentialMaster getUsername(String username);
 
-	Integer updatePassword(CredentialMaster user);
+	Integer update(CredentialMaster user);
+
+	CredentialMaster getcrediantialByuser(Integer id);
 
 }

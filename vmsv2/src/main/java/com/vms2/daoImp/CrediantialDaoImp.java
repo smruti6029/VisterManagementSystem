@@ -38,7 +38,7 @@ public class CrediantialDaoImp implements CrediantialDao {
 	}
 
 	@Override
-	public Integer updatePassword(CredentialMaster user)
+	public Integer update(CredentialMaster user)
 	{
 		try
 		{
@@ -48,6 +48,13 @@ public class CrediantialDaoImp implements CrediantialDao {
 			return 0;
 		}
 		
+	}
+
+	@Override
+	public CredentialMaster getcrediantialByuser(Integer id) {
+		Criteria criteria= sessionFactory.getCurrentSession().createCriteria(CredentialMaster.class);
+		criteria.add(Restrictions.eq("user.id", id));
+		return (CredentialMaster) criteria.uniqueResult();
 	}
 
 }

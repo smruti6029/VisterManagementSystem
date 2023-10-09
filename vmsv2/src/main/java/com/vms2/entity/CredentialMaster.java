@@ -41,8 +41,8 @@ public class CredentialMaster {
 	@Column(name = "created_on")
 	private Date createdOn;
 	
-	@Column(name = "updated_by")
-	private Date updatedBY;
+	@Column(name = "updated_on")
+	private Date updatedOn;
 	
 	@Column(name = "is_active")
 	private Boolean isActive;
@@ -110,12 +110,12 @@ public class CredentialMaster {
 		this.createdOn = createdOn;
 	}
 
-	public Date getUpdatedBY() {
-		return updatedBY;
+	public Date getupdatedOn() {
+		return updatedOn;
 	}
 
-	public void setUpdatedBY(Date updatedBY) {
-		this.updatedBY = updatedBY;
+	public void setupdatedOn(Date updatedOn) {
+		this.updatedOn = updatedOn;
 	}
 
 	public Boolean getIsActive() {

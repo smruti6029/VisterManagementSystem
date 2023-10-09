@@ -1,35 +1,35 @@
 package com.vms2.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import com.vms2.daoImp.CompanyDaoImp;
 import com.vms2.dto.CompanyDTO;
+import com.vms2.dto.IdIsactiveDTO;
 import com.vms2.entity.Company;
-import com.vms2.response.Response;
 
-@Service
-public class CompanyService {
+
+
+public interface CompanyService {
 	
+	   List<Company> getAllCompanies();
+
+	    Company getCompanyById(Integer id);
+
+	    Company saveCompany(CompanyDTO companyDto);
+	    
+	    public Company convertToEntity(CompanyDTO companyDto);
+
+		Company updateCompany(Integer id, Company updatedCompany);
+
+		Company updateCompany(Integer id);
+
+		void isActiveCompany(Integer id);
+
+		List<Company> serachCompany(Integer stateId, Integer cityId, String companyName ,Boolean isActive);
+
+		Integer updateCompany(IdIsactiveDTO activeDto);
+
+		boolean isEmailAlreadyInUse(String email);
+
 	
-	@Autowired
-	private CompanyDaoImp companyDao;
-	
-	public Response addCompany(CompanyDTO companyDTO)
-	{
-		
-		Company convertDTOToEntity = Company.convertDTOToEntity(companyDTO);
-		
-		int addCompany = companyDao.addCompany(convertDTOToEntity);
-		
-		return new Response("Ok",convertDTOToEntity,HttpStatus.OK.value());
-		
-		
-		
-		
-		
-		
-	}
 
 }

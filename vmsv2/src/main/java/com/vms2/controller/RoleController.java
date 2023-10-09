@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vms2.dto.RoleDTO;
 import com.vms2.response.Response;
-import com.vms2.service.RoleService;
+import com.vms2.serviceImp.RoleService;
 import com.vms2.validation.VallidationClass;
 
 @RestController
@@ -30,9 +30,9 @@ public class RoleController {
 
 	@PostMapping("/add")
 	public ResponseEntity<?> addRole(@RequestBody RoleDTO roleDto) {
-		Response checkroleVallidOrnot = vallidationClass.checkroleVallidOrnot(roleDto);
+		Response<?> checkroleVallidOrnot = vallidationClass.checkroleVallidOrnot(roleDto);
 		if (checkroleVallidOrnot.getStatus() == HttpStatus.OK.value()) {
-			Response response = roleService.saveRole(roleDto);
+			Response<?> response = roleService.saveRole(roleDto);
 			if (response.getStatus() == HttpStatus.OK.value()) {
 				return ResponseEntity.ok(response);
 			} else {
@@ -46,17 +46,17 @@ public class RoleController {
 	public ResponseEntity<?> getAllrole() {
 		List<RoleDTO> getallRole = roleService.getallRole();
 		if (getallRole != null) {
-			return ResponseEntity.ok(getallRole);
+			return new ResponseEntity<>(new Response<>("Success",getallRole,HttpStatus.OK.value()),HttpStatus.OK);
 		} else {
-			return ResponseEntity.badRequest().body("No Data Found");
+			return new ResponseEntity<>(new Response<>("No Data",null,HttpStatus.BAD_REQUEST.value()),HttpStatus.BAD_REQUEST);
 		}
 
 	}
 
 	@DeleteMapping("/role/{id}")
-	public Response<?> deleteByid(@PathVariable("id") Integer id) {
+	public ResponseEntity<?> deleteByid(@PathVariable("id") Integer id) {
 		Response<?> deleteRoleByid = roleService.deleteRoleByid(id);
-		return deleteRoleByid;
+		return new ResponseEntity<>(deleteRoleByid,HttpStatus.OK);
 	}
 
 }

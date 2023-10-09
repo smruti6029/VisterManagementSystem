@@ -40,7 +40,6 @@ public class UserdaoImp implements UserDao {
 		return (User) criteria.uniqueResult();
 	}
 
-	@Override
 	public List<User> getallUser() {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class);
 		
@@ -69,6 +68,19 @@ public class UserdaoImp implements UserDao {
 		}catch (Exception e) {
 			return 0;
 		}
+	}
+
+	@Override
+	public List<User> getallUser(Integer company_id) {
+		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(User.class);
+		criteria.add(Restrictions.eq("company.id", company_id));
+		return criteria.list();
+	}
+
+	@Override
+	public List<User> getallUsers() {
+		Criteria criteria=sessionFactory.getCurrentSession().createCriteria(User.class);
+		return criteria.list();
 	}
 
 }

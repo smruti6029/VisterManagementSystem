@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,27 +26,27 @@ import com.vms2.response.Response;
 @RequestMapping("/api/image/")
 public class ImageController {
 
-//  @Value("${project.image}")
-//  private String path;
+  @Value("${project.image}")
+  private String path;
 
-	private static final String IMAGE_UPLOAD_PATH = "/home/rapidsoft/Documents/Spring_Security/vmsv2";
-
-//	
-
-	String path = IMAGE_UPLOAD_PATH;
+//	private static final String IMAGE_UPLOAD_PATH = "/home/rapidsoft/Documents/Spring_Security/vmsv2";
+//
+////	
+//
+//	String path = IMAGE_UPLOAD_PATH;
 
 	@PostMapping("/upload")
 	public ResponseEntity<?> upload(@RequestParam("image") MultipartFile image) throws IOException {
 
 		Boolean checkImage = Helper.CheckImage(image);
 
-		if(checkImage)
-		{
-		String fileName = Fileservice.uploadImage(path, image);
-		return new ResponseEntity<>(new Response<>("Image uploaded successfully", fileName, HttpStatus.OK.value()),
-				HttpStatus.OK);
+		if (checkImage) {
+			String fileName = Fileservice.uploadImage(path, image);
+			return new ResponseEntity<>(new Response<>("Image uploaded successfully", fileName, HttpStatus.OK.value()),
+					HttpStatus.OK);
 		}
-		return new ResponseEntity<>(new Response<>("Upload Vallid Image","Upload VAllid Image ", HttpStatus.BAD_REQUEST.value()),
+		return new ResponseEntity<>(
+				new Response<>("Upload Vallid Image", "Upload VAllid Image ", HttpStatus.BAD_REQUEST.value()),
 				HttpStatus.BAD_REQUEST);
 
 	}
@@ -53,6 +54,7 @@ public class ImageController {
 	@GetMapping(value = "/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
 	public void downloadImage(@PathVariable("imageName") String imageName, HttpServletResponse response)
 			throws IOException {
+		System.out.println(imageName);
 
 		try {
 			InputStream resource = Fileservice.getResource(path, imageName);

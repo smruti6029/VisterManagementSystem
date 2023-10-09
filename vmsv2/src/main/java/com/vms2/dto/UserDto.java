@@ -1,11 +1,13 @@
 package com.vms2.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.vms2.entity.City;
 import com.vms2.entity.Company;
 import com.vms2.entity.Role;
@@ -17,38 +19,81 @@ import com.vms2.validation.PhoneConstraint;
 public class UserDto {
 
 	private Integer id;
-	
-	@NotBlank(message = "Provied Name")
-	private String name;
-	
+
+	private String firstname;
+
+	private String lastname;
+
 	@NotBlank(message = "Email address is required")
 	@EmailConstraint(message = "Invalid email address format")
 	private String email;
-	
+
 	@NotBlank(message = "Phopne Number Requird")
-	@Size(min =10,max = 10,message = "Phone Must be 10 Digit")
+	@Size(min = 10, max = 10, message = "Phone Must be 10 Digit")
 	@PhoneConstraint(message = "Phone Number Format Invalid")
 	private String phone;
-	
+
 	private String dob;
-	
+
+	private String image;
+
 	private String pinCode;
-	
+
 	private String created_by;
 	
+	private String gender;
+	
+	private String govtId;
+
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date createdOn;
-	
-	private Date updatedBY;
-	
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss:mmm")
+	private Date updatedOn;
+
 	private Boolean isActive;
-	
+
 	private Company company;
-	
+
 	private Role role;
-	
+
 	private State state;
-	
+
 	private City city;
+	
+	
+	private String address;
+	
+	private  Integer updatedBy=null;
+	
+	private String empCode;
+
+	
+
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Integer getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(Integer updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public String getEmpCode() {
+		return empCode;
+	}
+
+	public void setEmpCode(String empCode) {
+		this.empCode = empCode;
+	}
 
 	public Integer getId() {
 		return id;
@@ -58,12 +103,28 @@ public class UserDto {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getImage() {
+		return image;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	public String getEmail() {
@@ -114,12 +175,12 @@ public class UserDto {
 		this.createdOn = createdOn;
 	}
 
-	public Date getUpdatedBY() {
-		return updatedBY;
+	public Date getupdatedOn() {
+		return updatedOn;
 	}
 
-	public void setUpdatedBY(Date updatedBY) {
-		this.updatedBY = updatedBY;
+	public void setupdatedOn(Date updatedOn) {
+		this.updatedOn = updatedOn;
 	}
 
 	public Boolean getIsActive() {
@@ -164,92 +225,129 @@ public class UserDto {
 
 	public UserDto() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
-	public UserDto(Integer id, String name, String email, String phone, String dob, String pinCode, String created_by,
-			Date createdOn, Date updatedBY, Boolean isActive, Company company, Role role, State state,
-			City city) {
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getGovtId() {
+		return govtId;
+	}
+
+	public void setGovtId(String govtId) {
+		this.govtId = govtId;
+	}
+
+	public UserDto(Integer id, String firstname, String lastname,
+			@NotBlank(message = "Email address is required") String email,
+			@NotBlank(message = "Phopne Number Requird") @Size(min = 10, max = 10, message = "Phone Must be 10 Digit") String phone,
+			String dob, String image, String pinCode, String created_by, String gender, String govtId, Date createdOn,
+			Date updatedOn, Boolean isActive, Company company, Role role, State state, City city) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.email = email;
 		this.phone = phone;
 		this.dob = dob;
+		this.image = image;
 		this.pinCode = pinCode;
 		this.created_by = created_by;
+		this.gender = gender;
+		this.govtId = govtId;
 		this.createdOn = createdOn;
-		this.updatedBY = updatedBY;
+		this.updatedOn = updatedOn;
 		this.isActive = isActive;
 		this.company = company;
 		this.role = role;
 		this.state = state;
 		this.city = city;
 	}
-	
-	
-	
-	
-	
-	public UserDto convertUserToDTO(User user) {
-	    UserDto userDTO = new UserDto();
-	    userDTO.setId(user.getId());
-	    userDTO.setName(user.getName());
-	    userDTO.setEmail(user.getEmail());
-	    userDTO.setPhone(user.getPhone());
-	    userDTO.setDob(user.getDob());
-	    userDTO.setPinCode(user.getPinCode());
-	    userDTO.setCreated_by(user.getCreated_by());
-	    userDTO.setCreatedOn(user.getCreatedOn());
-	    userDTO.setUpdatedBY(user.getUpdatedBY());
-	    userDTO.setIsActive(user.getIsActive());
-	    
-	    // You can also convert the associated entities (Company, Role, State, City) to their respective DTOs
-	    userDTO.setCompany(companyEntityToDTO(user.getCompany()));
-	    userDTO.setRole(roleEntityToDTO(user.getRole()));
-	    userDTO.setState(stateEntityToDTO(user.getState()));
-	    userDTO.setCity(cityEntityToDTO(user.getCity()));
-	    
-	    return userDTO;
+
+	public static UserDto convertUserToDTO(User user) {
+		UserDto userDTO = new UserDto();
+		userDTO.setId(user.getId());
+		userDTO.setFirstname(user.getFirstname());
+		userDTO.setLastname(user.getLastname());
+		userDTO.setEmail(user.getEmail());
+		userDTO.setPhone(user.getPhone());
+		userDTO.setDob(user.getDob());
+		userDTO.setPinCode(user.getPinCode());
+		userDTO.setCreated_by(user.getCreated_by());
+		userDTO.setCreatedOn(converUtc(user.getCreatedOn()));
+		userDTO.setupdatedOn(user.getupdatedOn());
+		userDTO.setIsActive(user.getIsActive());
+		userDTO.setImage(user.getImage());
+
+		userDTO.setCompany(companyEntityToDTO(user.getCompany()));
+		userDTO.setRole(roleEntityToDTO(user.getRole()));
+		userDTO.setState(stateEntityToDTO(user.getState()));
+		userDTO.setCity(cityEntityToDTO(user.getCity()));
+		
+		userDTO.setGender(user.getGender());
+		userDTO.setGovtId(user.getGovtId());
+		userDTO.setAddress(user.getAddress());
+		userDTO.setPinCode(user.getPinCode());
+		userDTO.setEmpCode(user.getEmpCode());
+		
+
+		return userDTO;
 	}
 
-	private Company companyEntityToDTO(Company company) {
+	private static Company companyEntityToDTO(Company company) {
 		Company companyDTO = new Company();
 		companyDTO.setId(company.getId());
 		companyDTO.setName(company.getName());
-	    
-	    return companyDTO;
+		companyDTO.setAddress(company.getAddress());
+		companyDTO.setLogo(company.getLogo());
+		
+
+		return companyDTO;
 	}
 
-	private Role roleEntityToDTO(Role role) {
+	private static Role roleEntityToDTO(Role role) {
 		Role roleDTO = new Role();
-	    roleDTO.setId(role.getId());
-	    roleDTO.setName(role.getName());
-	    
-	    
-	    
-	    return roleDTO;
+		roleDTO.setId(role.getId());
+		roleDTO.setName(role.getName());
+
+		return roleDTO;
 	}
 
-	private State stateEntityToDTO(State state) {
+	private static State stateEntityToDTO(State state) {
 		State stateDTO = new State();
-	    stateDTO.setId(state.getId());
-	    stateDTO.setName(state.getName());
-	    
-	    
-	    return stateDTO;
+		stateDTO.setId(state.getId());
+		stateDTO.setName(state.getName());
+
+		return stateDTO;
 	}
 
-	private City cityEntityToDTO(City city) {
+	private static City cityEntityToDTO(City city) {
 		City cityDTO = new City();
-	    cityDTO.setId(city.getId());
-	    cityDTO.setName(city.getName()); 
-	    return cityDTO;
+		cityDTO.setId(city.getId());
+		cityDTO.setName(city.getName());
+		return cityDTO;
 	}
 
-	
-	
-	
-	
+	public static Date converUtc(Date datetime) {
+
+		Date date = datetime;
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC")); // Set
+		Date createdOn2 = datetime;
+		return createdOn2;
+//	    Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(createdOn2);
+//        calendar.add(Calendar.HOUR_OF_DAY, 5);
+//
+//        // Get the updated Date
+//        Date updatedDate = calendar.getTime();
+//        return updatedDate;
+	}
 
 }

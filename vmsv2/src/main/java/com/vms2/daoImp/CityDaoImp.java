@@ -35,4 +35,9 @@ public class CityDaoImp implements CityDao {
 		
 	}
 
+	@Override
+	public City getCityById(Integer id) {
+		return sessionFactory.getCurrentSession().get(City.class, id);
+	}
+
 }
